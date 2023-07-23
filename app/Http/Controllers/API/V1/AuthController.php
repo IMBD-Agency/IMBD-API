@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\LoginRequest;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\API\V1\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller {
@@ -16,7 +14,7 @@ class AuthController extends Controller {
             return response()->json([
                 'status' => 'success',
                 'data' => [
-                    'user' => $user,
+                    'user' => $user->only(['name', 'email', 'mobile', 'image']),
                     'token' => $user->createToken('Token for ' . $user->name)->plainTextToken,
                 ]
             ], 200);

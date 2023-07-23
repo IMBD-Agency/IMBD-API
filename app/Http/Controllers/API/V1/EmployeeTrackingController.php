@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\AppActivityStoreRequest;
-use App\Http\Requests\API\ScreenshotStoreRequest;
-use App\Http\Requests\API\WebsiteActivityStoreRequest;
+use App\Http\Requests\API\V1\AppActivityStoreRequest;
+use App\Http\Requests\API\V1\ScreenshotStoreRequest;
+use App\Http\Requests\API\V1\WebsiteActivityStoreRequest;
 use App\Models\AppActivity;
 use App\Models\Screenshot;
 use App\Models\User;

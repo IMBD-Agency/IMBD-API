@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests\API\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ScreenshotStoreRequest extends FormRequest {
+class AppActivityStoreRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -21,8 +21,8 @@ class ScreenshotStoreRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'screen_id' => 'required|integer',
-            'image' => 'required|mimes:jpg,png',
+            'app_name' => 'required|string',
+            'duration' => 'required|decimal:1,9',
         ];
     }
 }
