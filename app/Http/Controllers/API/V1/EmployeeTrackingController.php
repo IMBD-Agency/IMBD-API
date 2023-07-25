@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\V1\ActivityStoreRequest;
 use App\Http\Requests\API\V1\ScreenshotStoreRequest;
 use App\Models\EmployeeActivity;
 use App\Models\Screenshot;
@@ -27,14 +26,27 @@ class EmployeeTrackingController extends Controller {
         }
     }
 
-    public function activity_store(ActivityStoreRequest $request) {
-        EmployeeActivity::create([
-            'user_id' => auth()->user()->id,
-            'activity' => $request->activity,
-        ]);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Data uploaded Successfully.'
-        ], 201);
+    public function activity_store(Request $request) {
+        $datas = json_decode($request->getContent(), true);
+        if ($datas) {
+            foreach ($datas as $data) {
+                $data = json_decode(json_encode($data));
+                EmployeeActivity::create([
+                    'user_id' => auth()->user()->id,
+                    'name' => $data->name,
+                    'url' => $data->url,
+                    'duration' => $data->duration,
+                ]);
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data uploaded Successfully.'
+            ], 201);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data structure is invalid.'
+            ], 200);
+        }
     }
 }

@@ -14,7 +14,9 @@ return new class extends Migration {
         Schema::create('employee_activities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->text('activity');
+            $table->string('name')->nullable();
+            $table->string('url')->nullable();
+            $table->float('duration')->comment('duration in minutes');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
