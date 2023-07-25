@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\API\V1\AuthController;
 use App\Http\Controllers\API\V1\EmployeeTrackingController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
