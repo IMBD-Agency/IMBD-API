@@ -21,9 +21,7 @@ Route::group(['prefix' => 'v1'], function () {
     //protected routes
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/logout', [AuthController::class, 'logout']);
-        Route::get('/users', [EmployeeTrackingController::class, 'index']);
         Route::post('/screenshots/store', [EmployeeTrackingController::class, 'screenshots_store']);
-        Route::post('/app/activity/store', [EmployeeTrackingController::class, 'app_activity_store']);
-        Route::post('/website/activity/store', [EmployeeTrackingController::class, 'website_activity_store']);
+        Route::post('/activity/store', [EmployeeTrackingController::class, 'activity_store']);
     });
 });

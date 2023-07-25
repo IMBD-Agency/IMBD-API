@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AppActivity extends Model {
+class EmployeeActivity extends Model {
     use HasFactory;
 
     protected $guarded = ['id'];

@@ -11,11 +11,10 @@ return new class extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('app_activities', function (Blueprint $table) {
+        Schema::create('employee_activities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('app_name');
-            $table->float('duration')->comment('duration in minutes');
+            $table->text('activity');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -27,6 +26,6 @@ return new class extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('app_activities');
+        Schema::dropIfExists('employee_activities');
     }
 };
