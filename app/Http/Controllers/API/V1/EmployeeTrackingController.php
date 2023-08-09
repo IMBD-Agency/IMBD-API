@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\V1\ScreenshotStoreRequest;
+use App\Http\Requests\API\V1\TimeTracingStoreRequest;
 use App\Models\EmployeeActivity;
 use App\Models\Screenshot;
+use App\Models\TimeTracker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
@@ -46,6 +48,27 @@ class EmployeeTrackingController extends Controller {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Data structure is invalid.'
+            ], 200);
+        }
+    }
+
+    public function time_store(TimeTracingStoreRequest $request) {
+        $data = TimeTracker::create([
+            'user_id' => auth()->user()->id,
+            'total_time' => $request->total_time,
+            'active_time' => $request->active_time,
+            'idle_time' => $request->idle_time,
+        ]);
+
+        if ($data) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data uploaded Successfully.'
+            ], 201);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong.'
             ], 200);
         }
     }

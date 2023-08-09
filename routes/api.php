@@ -22,5 +22,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/screenshots/store', [EmployeeTrackingController::class, 'screenshots_store']);
         Route::post('/activity/store', [EmployeeTrackingController::class, 'activity_store']);
+        Route::post('/time/store', [EmployeeTrackingController::class, 'time_store']);
     });
 });
