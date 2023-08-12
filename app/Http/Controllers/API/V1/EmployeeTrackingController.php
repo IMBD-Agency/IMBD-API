@@ -8,11 +8,22 @@ use App\Http\Requests\API\V1\TimeTracingStoreRequest;
 use App\Models\EmployeeActivity;
 use App\Models\Screenshot;
 use App\Models\TimeTracker;
+use App\Models\TrackerSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
 
 class EmployeeTrackingController extends Controller {
+
+    public function settings() {
+        $data = TrackerSettings::first();
+        return response()->json([
+            'ScreenshotInterval' => $data->screenshot_interval,
+            'ActivityInterval' => $data->activity_interval,
+            'IdleTimeInterval' => $data->idle_time_interval
+        ], 200);
+    }
+
     public function screenshots_store(ScreenshotStoreRequest $request) {
         $file_name = Str::lower('screenshot-' . auth()->user()->id . '-' . uniqid() . '.jpg');
         if (Image::make($request->image)->resize('1920', '1080')->blur(25)->save(public_path('/uploads/screenshot/' . $file_name))) {
