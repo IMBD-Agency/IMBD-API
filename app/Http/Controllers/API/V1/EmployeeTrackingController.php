@@ -58,8 +58,8 @@ class EmployeeTrackingController extends Controller {
                             'duration' => $data->duration,
                         ]);
                     }
-                } elseif ($data->url && filter_var('https://' . $data->url, FILTER_VALIDATE_URL)) {
-                    $pieces = parse_url($data->url);
+                } elseif ($data->url && preg_match('/^(http|https):\\/\\/[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', 'https://' . $data->url)) {
+                    $pieces = parse_url('https://' . $data->url);
                     $domain = isset($pieces['host']) ?  $pieces['host'] : $pieces['path'];
                     $domain = 'https://' . $domain;
                     $old_data = EmployeeActivity::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->where('url', $domain)->first();
