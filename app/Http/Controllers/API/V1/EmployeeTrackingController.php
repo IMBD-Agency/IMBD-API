@@ -26,7 +26,7 @@ class EmployeeTrackingController extends Controller {
 
     public function screenshots_store(ScreenshotStoreRequest $request) {
         $file_name = Str::lower('screenshot-' . auth()->user()->id . '-' . uniqid() . '.jpg');
-        if (Image::make($request->image)->resize('1920', '1080')->blur(25)->save(public_path('/uploads/screenshot/' . $file_name))) {
+        if (Image::make($request->image)->resize('1920', '1080')->save(public_path('/uploads/screenshot/' . $file_name))) {
             Screenshot::create([
                 'user_id' => auth()->user()->id,
                 'screen_id' => $request->screen_id,
@@ -44,12 +44,19 @@ class EmployeeTrackingController extends Controller {
         if ($datas) {
             foreach ($datas as $data) {
                 $data = json_decode(json_encode($data));
-                EmployeeActivity::create([
-                    'user_id' => auth()->user()->id,
-                    'name' => $data->name,
-                    'url' => $data->url,
-                    'duration' => $data->duration,
-                ]);
+                if ($data->name) {
+                    EmployeeActivity::create([
+                        'user_id' => auth()->user()->id,
+                        'name' => $data->name,
+                        'duration' => $data->duration,
+                    ]);
+                } elseif ($data->url && filter_var('https://' . $data->url, FILTER_VALIDATE_URL)) {
+                    EmployeeActivity::create([
+                        'user_id' => auth()->user()->id,
+                        'url' => 'https://' . $data->url,
+                        'duration' => $data->duration,
+                    ]);
+                }
             }
             return response()->json([
                 'status' => 'success',
