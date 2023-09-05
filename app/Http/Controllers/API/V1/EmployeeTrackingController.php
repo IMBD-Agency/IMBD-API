@@ -61,7 +61,7 @@ class EmployeeTrackingController extends Controller {
                 } elseif ($data->url && filter_var('https://' . $data->url, FILTER_VALIDATE_URL)) {
                     $pieces = parse_url($data->url);
                     $domain = isset($pieces['host']) ?  $pieces['host'] : $pieces['path'];
-                    $domain = 'https://' . $domain;
+                    $domain = explode("/", $domain);
                     $old_data = EmployeeActivity::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->where('url', $domain)->first();
                     if ($old_data) {
                         $old_data->update([
@@ -70,7 +70,7 @@ class EmployeeTrackingController extends Controller {
                     } else {
                         EmployeeActivity::create([
                             'user_id' => auth()->user()->id,
-                            'url' => $domain,
+                            'url' => $domain[0],
                             'duration' => $data->duration,
                         ]);
                     }
