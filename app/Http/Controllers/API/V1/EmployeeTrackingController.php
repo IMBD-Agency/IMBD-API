@@ -9,6 +9,7 @@ use App\Models\EmployeeActivity;
 use App\Models\Screenshot;
 use App\Models\TimeTracker;
 use App\Models\TrackerSettings;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
@@ -45,17 +46,34 @@ class EmployeeTrackingController extends Controller {
             foreach ($datas as $data) {
                 $data = json_decode(json_encode($data));
                 if ($data->name) {
-                    EmployeeActivity::create([
-                        'user_id' => auth()->user()->id,
-                        'name' => $data->name,
-                        'duration' => $data->duration,
-                    ]);
+                    $old_data = EmployeeActivity::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->where('name', $data->name)->first();
+                    if ($old_data) {
+                        $old_data->update([
+                            'duration' => $old_data->duration + $data->duration,
+                        ]);
+                    } else {
+                        EmployeeActivity::create([
+                            'user_id' => auth()->user()->id,
+                            'name' => $data->name,
+                            'duration' => $data->duration,
+                        ]);
+                    }
                 } elseif ($data->url && filter_var('https://' . $data->url, FILTER_VALIDATE_URL)) {
-                    EmployeeActivity::create([
-                        'user_id' => auth()->user()->id,
-                        'url' => 'https://' . $data->url,
-                        'duration' => $data->duration,
-                    ]);
+                    $pieces = parse_url($data->url);
+                    $domain = isset($pieces['host']) ?  $pieces['host'] : $pieces['path'];
+                    $domain = 'https://' . $domain;
+                    $old_data = EmployeeActivity::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today())->where('url', $domain)->first();
+                    if ($old_data) {
+                        $old_data->update([
+                            'duration' => $old_data->duration + $data->duration,
+                        ]);
+                    } else {
+                        EmployeeActivity::create([
+                            'user_id' => auth()->user()->id,
+                            'url' => $domain,
+                            'duration' => $data->duration,
+                        ]);
+                    }
                 }
             }
             return response()->json([
