@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Screenshot;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class ScreenshotDelete extends Command {
     /**
@@ -36,6 +35,5 @@ class ScreenshotDelete extends Command {
                 echo 'Deleted ' . $screenshot->image . '\n';
             }
         }
-        Log::info('Delete Done.');
     }
 }
