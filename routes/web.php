@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IMBDCustomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('https://www.imbdagency.com');
 });
+
+Route::get('debug', [IMBDCustomController::class, 'debug']);
