@@ -65,8 +65,8 @@ return [
             'password' => env('SFTP_PASSWORD'),
 
             // Settings for file / directory permissions...
-            'visibility' => 'private', // `private` = 0600, `public` = 0644
-            'directory_visibility' => 'private', // `private` = 0700, `public` = 0755
+            'visibility' => 'public', // `private` = 0600, `public` = 0644
+            'directory_visibility' => 'public', // `private` = 0700, `public` = 0755
 
             'port' => env('SFTP_PORT', 22),
             'root' => env('SFTP_ROOT', ''),
