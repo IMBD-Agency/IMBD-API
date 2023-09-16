@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Screenshot;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class ScreenshotDelete extends Command {
     /**
@@ -28,11 +29,11 @@ class ScreenshotDelete extends Command {
      */
     public function handle() {
         $screenshots = Screenshot::whereYear('created_at', date('Y'))->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))->get();
-
         foreach ($screenshots as $screenshot) {
-            if (unlink(public_path('/uploads/screenshot/' . $screenshot->image))) {
+            if (Storage::disk('sftp')->exists($screenshot->image)) {
+                Storage::disk('sftp')->delete($screenshot->image);
                 $screenshot->delete();
-                echo 'Deleted ' . $screenshot->image . '\n';
+                echo 'Deleted ' . $screenshot->image;
             }
         }
     }
