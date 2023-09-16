@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -54,6 +54,23 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
+        ],
+
+        'sftp' => [
+            'driver' => 'sftp',
+            'host' => env('SFTP_HOST'),
+
+            // Settings for basic authentication...
+            'username' => env('SFTP_USERNAME'),
+            'password' => env('SFTP_PASSWORD'),
+
+            // Settings for SSH key based authentication with encryption password...
+            // 'privateKey' => env('SFTP_PRIVATE_KEY'),
+            // 'passphrase' => env('SFTP_PASSPHRASE'),
+
+            // Settings for file / directory permissions...
+            'visibility' => 'private', // `private` = 0600, `public` = 0644
+            'directory_visibility' => 'private', // `private` = 0700, `public` = 0755
         ],
 
     ],

@@ -11,6 +11,7 @@ use App\Models\TimeTracker;
 use App\Models\TrackerSettings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Image;
 
@@ -27,7 +28,8 @@ class EmployeeTrackingController extends Controller {
 
     public function screenshots_store(ScreenshotStoreRequest $request) {
         $file_name = Str::lower('screenshot-' . auth()->user()->id . '-' . uniqid() . '.jpg');
-        if (Image::make($request->image)->resize('1280', '720')->save(public_path('/uploads/screenshot/' . $file_name))) {
+        $image = Image::make($request->image)->resize('1280', '720');
+        if (Storage::disk('sftp')->put($file_name, $image->stream())) {
             Screenshot::create([
                 'user_id' => auth()->user()->id,
                 'screen_id' => $request->screen_id,
