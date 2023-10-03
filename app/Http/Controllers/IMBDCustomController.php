@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class IMBDCustomController extends Controller {
     public function delete_screenshot() {
-        $screenshots = Screenshot::whereYear('created_at', date('Y'))->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))->get();
+        $last_month = Carbon::now()->subMonth();
+        $screenshots = Screenshot::where('created_at', '<=',  $last_month)->get();
+        // $screenshots = Screenshot::whereYear('created_at', date('Y'))->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))->get();
         foreach ($screenshots as $screenshot) {
             if (Storage::disk('sftp')->exists($screenshot->image)) {
                 Storage::disk('sftp')->delete($screenshot->image);
                 $screenshot->delete();
-                echo 'Deleted ' . $screenshot->image;
+                echo "Deleted " . $screenshot->image . "\n";
             }
         }
     }

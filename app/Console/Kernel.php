@@ -19,9 +19,7 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-        $schedule->command('screenshot_delete')->monthlyOn(02, '10:00')->runInBackground();
-        $schedule->command('screenshot_delete')->monthlyOn(04, '10:00')->runInBackground();
-        $schedule->command('screenshot_delete')->monthlyOn(06, '10:00')->runInBackground();
+        $schedule->command('screenshot_delete')->dailyAt('10:00')->runInBackground();
     }
 
     /**
