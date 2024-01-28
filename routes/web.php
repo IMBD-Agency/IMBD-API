@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('login', function () {
-    return redirect('https://www.imbdagency.com');
+    return redirect('https://www.imbdagency.com')->name('login');
 });
 
 Route::post('login', function () {
