@@ -19,8 +19,8 @@ Route::get('/', function () {
 });
 
 Route::get('login', function () {
-    return redirect('https://www.imbdagency.com')->name('login');
-});
+    return redirect('https://www.imbdagency.com');
+})->name('login');
 
 Route::post('login', function () {
     return redirect('https://www.imbdagency.com');
