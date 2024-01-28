@@ -18,5 +18,13 @@ Route::get('/', function () {
     return redirect('https://www.imbdagency.com');
 });
 
+Route::get('login', function () {
+    return redirect('https://www.imbdagency.com');
+});
+
+Route::post('login', function () {
+    return redirect('https://www.imbdagency.com');
+});
+
 Route::get('delete_screenshot', [IMBDCustomController::class, 'delete_screenshot']);
 Route::get('debug', [IMBDCustomController::class, 'debug']);
