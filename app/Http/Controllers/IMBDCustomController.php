@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Screenshot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class IMBDCustomController extends Controller {
@@ -22,7 +23,6 @@ class IMBDCustomController extends Controller {
     }
 
     public function debug() {
-        $last_month = Carbon::now()->subDays(30);
-        return $screenshots = Screenshot::whereDate('created_at', '<=',  $last_month)->count();
+        Log::debug('Here I am');
     }
 }
