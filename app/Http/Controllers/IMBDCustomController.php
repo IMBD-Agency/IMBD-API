@@ -22,5 +22,7 @@ class IMBDCustomController extends Controller {
     }
 
     public function debug() {
+        $last_month = Carbon::now()->subMonth();
+        return $screenshots = Screenshot::where('created_at', '<=',  $last_month)->count();
     }
 }
