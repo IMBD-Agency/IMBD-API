@@ -28,15 +28,15 @@ class ScreenshotDelete extends Command {
      * @return int
      */
     public function handle() {
-        $last_month = Carbon::now()->subMonth();
-        $screenshots = Screenshot::where('created_at', '<=',  $last_month)->get();
+        $last_month = Carbon::now()->subDays(30);
+        $screenshots = Screenshot::whereDate('created_at', '<=',  $last_month)->get();
         // $screenshots = Screenshot::whereYear('created_at', date('Y'))->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))->get();
         foreach ($screenshots as $screenshot) {
             if (Storage::disk('sftp')->exists($screenshot->image)) {
                 Storage::disk('sftp')->delete($screenshot->image);
-                $screenshot->delete();
-                echo "Deleted " . $screenshot->image . "\n";
             }
+            $screenshot->delete();
+            echo "Deleted " . $screenshot->image . "\n";
         }
     }
 }
