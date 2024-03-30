@@ -11,6 +11,7 @@ use App\Models\TimeTracker;
 use App\Models\TrackerSettings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Image;
@@ -18,6 +19,7 @@ use Image;
 class EmployeeTrackingController extends Controller {
 
     public function settings() {
+        Log::info('Someone access settings.');
         $data = TrackerSettings::first();
         return response()->json([
             'ScreenshotInterval' => $data->screenshot_interval,
