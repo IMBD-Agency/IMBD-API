@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel {
      */
     protected function schedule(Schedule $schedule) {
         $schedule->command('screenshot_delete')->everyTwoHours()->runInBackground();
-        $schedule->command('truncate_tokens')->dailyAt('07:00')->runInBackground();
+        // $schedule->command('truncate_tokens')->dailyAt('07:00')->runInBackground();
     }
 
     /**
