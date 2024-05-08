@@ -68,7 +68,7 @@ return [
             'visibility' => 'public', // `private` = 0600, `public` = 0644
             'directory_visibility' => 'public', // `private` = 0700, `public` = 0755
 
-            'port' => env('SFTP_PORT', 21),
+            'port' => env('SFTP_PORT', 22),
             'root' => env('SFTP_ROOT', ''),
         ],
 
