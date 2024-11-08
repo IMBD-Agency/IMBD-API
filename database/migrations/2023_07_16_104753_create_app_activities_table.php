@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->string('name')->nullable();
             $table->string('url')->nullable();
-            $table->float('duration')->comment('duration in minutes');
+            $table->float('duration')->comment('duration in seconds');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

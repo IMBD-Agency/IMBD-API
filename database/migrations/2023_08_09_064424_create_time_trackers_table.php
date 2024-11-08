@@ -13,11 +13,12 @@ return new class extends Migration {
     public function up() {
         Schema::create('time_trackers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->float('total_time')->comment('in minutes');
-            $table->float('active_time')->comment('in minutes');
-            $table->float('idle_time')->comment('in minutes');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('user_id');
+            $table->double('total_time');
+            $table->double('active_time');
+            $table->double('idle_time');
+            $table->date('for_date');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
